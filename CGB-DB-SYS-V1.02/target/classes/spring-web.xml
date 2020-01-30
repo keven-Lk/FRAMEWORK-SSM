@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 注册springmvc中的一些bean对象 -->
+	<mvc:annotation-driven/>
+	
+	<!-- 配置视图解析对象 -->
+	<bean id = "ViewResolver"
+			class = "org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="Prefix" value = "/WEB-INF/pages/"/>
+			<property name="suffix" value = ".html"/>
+	</bean>
+	
+	<!-- 配置spring mvc拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+	<!-- 配置要拦截的请求 -->
+			<mvc:mapping path="/*"/>
+		<!-- 排除哪些不拦截 -->
+			<mvc:exclude-mapping path="/user/doLogin.do"/>
+			<bean class = "com.db.common.web.DemoHandlerInterceptor"/>
+		</mvc:interceptor>
+	
+		<mvc:interceptor>
+			<mvc:mapping path="/user/doLogin.do"/>
+			<ref bean = "timeHandlerAccessInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 说明多个拦截器时,哪个优先执行要看配置顺序 -->
+</beans>

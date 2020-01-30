@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.AuthorDao">
+<!-- 
+	<cache readOnly="true"
+			type = "lruCache"/>
+ -->
+	<!-- 基于id查询作者信息,在mybatis中每个元素经解析以后都会封装一个MappedStatement对象 当有多个MappendStatement,系统底层还会将这些对象存储到Map集合. -->
+	<select id="findAuthor" resultType="map">
+		select * from author where id
+		= #{id}
+	</select>
+
+	<select id="selectAuthor" resultType="com.blog.pojo.Author">
+		select * from author where
+		id = #{id}
+	</select>
+</mapper>

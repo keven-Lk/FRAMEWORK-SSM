@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans><!-- Node -->
+	<!-- lazy为true时,对象何时需要何时创建 -->
+	<bean id = "date" class="java.util.Date" lazy = "true"/>
+	<!-- lazy为false,工厂初始化时就要创建对象 -->
+	<bean id = "obj" class="java.lang.Object" lazy = "false"/>
+</beans>

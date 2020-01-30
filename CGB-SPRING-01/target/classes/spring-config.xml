@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true"
+xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+	<bean id="cPool" class="com.spring.beans.ConnectionPool" lazy-init="true">
+	</bean>
+	<!-- 配置对指定包的扫描:spring会对指定包中或指定包中的子类进行扫描,检测这些类上是否有
+		@Service,@Controller,@Component 假如有spring会基于反射创建这些类的对象并进行管理-->
+	<context:component-scan base-package="com.spring"/>
+</beans>

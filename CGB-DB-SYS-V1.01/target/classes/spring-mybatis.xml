@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://mybatis.org/schema/mybatis-spring
+        http://mybatis.org/schema/mybatis-spring.xsd">
+
+	<!-- 整合mybatis中sqlsessionFactory 
+		1)SqlSessionFactoryBean 此对象底层基于SqlSessionFactoryBuilder创建SqlSessionFactory 
+		2)所有FactoryBean子类类型的对象类型的对象由spring管理时都会创建两大Bean对象 2.1)FactoryBean子类类型的对象(如果要获取此对象需要在bean的id前添加"$"符号) 
+		2.2)FactoryBean中getObject方法返回的对象 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- property元素name属性的set方法为对象属性赋值 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 设置mapper文件的位置 -->
+		<property name="mapperLocations"
+			value="classpath:mapper/sys/*Mapper.xml"></property>
+	</bean>
+
+	<!-- 通过此bean对象扫描指定包下的dao接口,并基于接口创建其实现类对象(代理对象) -->
+	<!-- 1)系统底层会基于dao接口创建接口的实现类对象 
+		2)系统底层会将创建的实现对象存储到spring容器中
+		2.1)key为接口名,默认首字母小写 
+		2.2)value为dao接口的实现类对象 -->
+	<!-- <bean id="daoScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+		<property name="BasePackage" value="com.db.**.dao" /> 当spring容器中只有一个SqlSessionFactory时如下配置可以不写 
+		<property name="SqlSessionFactoryBeanName" value="sqlSessionFactory" /> </bean> -->
+	<!-- 此方式是如上方式的升级版 -->
+	<mybatis:scan base-package="com.db.**.dao" />
+
+</beans>
